@@ -3,7 +3,7 @@
  * Plugin Name: Woo Inventory Alerts
  * Plugin URI: https://github.com/Open-WP-Club/woo-inventory-alerts
  * Description: Shows alerts for low stock and out of stock items directly on the WooCommerce order edit page.
- * Version: 1.0.1
+ * Version: 1.1.0
  * Author: Open WP Club
  * Author URI: https://github.com/Open-WP-Club
  * License: Apache-2.0
@@ -21,7 +21,7 @@ if (!defined('ABSPATH')) {
 }
 
 // Plugin constants
-define('WIA_VERSION', '1.0.1');
+define('WIA_VERSION', '1.1.0');
 define('WIA_PLUGIN_FILE', __FILE__);
 define('WIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('WIA_PLUGIN_URL', plugin_dir_url(__FILE__));
@@ -144,13 +144,7 @@ class WIA_Inventory_Alerts {
         foreach ($settings as $setting) {
             // Insert our settings before the section end
             if (isset($setting['type']) && 'sectionend' === $setting['type'] && isset($setting['id']) && 'product_inventory_options' === $setting['id']) {
-                // Add our settings
-                $new_settings[] = array(
-                    'title' => __('Woo Inventory Alerts Plugin', 'woo-inventory-alerts'),
-                    'type'  => 'title',
-                    'desc'  => '<em>' . __('The following settings are provided by the Woo Inventory Alerts plugin.', 'woo-inventory-alerts') . '</em>',
-                    'id'    => 'wia_inventory_alerts_options',
-                );
+
 
                 $new_settings[] = array(
                     'title'             => __('Alert threshold', 'woo-inventory-alerts'),
