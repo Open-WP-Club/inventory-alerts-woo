@@ -52,6 +52,15 @@ add_action('before_woocommerce_init', function() {
 });
 
 /**
+ * Add settings link to plugins page (works even without WooCommerce)
+ */
+add_filter('plugin_action_links_' . plugin_basename(__FILE__), function($links) {
+    $settings_link = '<a href="' . admin_url('admin.php?page=wia-settings') . '">' . __('Settings', 'woo-inventory-alerts') . '</a>';
+    array_unshift($links, $settings_link);
+    return $links;
+});
+
+/**
  * Initialize the plugin
  */
 add_action('plugins_loaded', function() {
@@ -101,9 +110,6 @@ class WIA_Inventory_Alerts {
 
         // Add meta box for summary
         add_action('add_meta_boxes', array($this, 'add_stock_alert_meta_box'));
-
-        // Settings link on plugins page
-        add_filter('plugin_action_links_' . plugin_basename(__FILE__), array($this, 'add_settings_link'));
     }
 
     /**
@@ -197,15 +203,6 @@ class WIA_Inventory_Alerts {
             </form>
         </div>
         <?php
-    }
-
-    /**
-     * Add settings link to plugins page
-     */
-    public function add_settings_link($links) {
-        $settings_link = '<a href="' . admin_url('admin.php?page=wia-settings') . '">' . __('Settings', 'woo-inventory-alerts') . '</a>';
-        array_unshift($links, $settings_link);
-        return $links;
     }
 
     /**
@@ -322,9 +319,14 @@ class WIA_Inventory_Alerts {
      * Add meta box for stock alerts summary
      */
     public function add_stock_alert_meta_box() {
-        $screen = wc_get_container()->get(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController::class)->custom_orders_table_usage_is_enabled()
-            ? wc_get_page_screen_id('shop-order')
-            : 'shop_order';
+        // Determine screen based on HPOS status (with fallback for older WooCommerce)
+        $screen = 'shop_order';
+        if (class_exists('\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController')) {
+            $controller = wc_get_container()->get(\Automattic\WooCommerce\Internal\DataStores\Orders\CustomOrdersTableController::class);
+            if ($controller->custom_orders_table_usage_is_enabled()) {
+                $screen = wc_get_page_screen_id('shop-order');
+            }
+        }
 
         add_meta_box(
             'wia-stock-alerts',
