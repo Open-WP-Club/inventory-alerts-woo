@@ -5,7 +5,7 @@
  * This file runs when the plugin is deleted from the WordPress admin.
  * It removes all options created by the plugin.
  *
- * @package Woo_Inventory_Alerts
+ * @package Inventory_Alerts_For_WooCommerce
  */
 
 // Exit if not called by WordPress
