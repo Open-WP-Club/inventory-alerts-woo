@@ -17,16 +17,16 @@ This plugin adds inventory alerts directly on WooCommerce order pages to help st
 ## File Structure
 
 ```
-woo-inventory-alerts/
-├── inventory-alerts-woo.php    # Main plugin file
-├── uninstall.php               # Cleanup on plugin deletion
-├── readme.txt                  # WordPress.org readme
-├── README.md                   # GitHub readme
-├── CLAUDE.md                   # This file
+inventory-alerts-for-woo/
+├── inventory-alerts-for-woo.php    # Main plugin file
+├── uninstall.php                   # Cleanup on plugin deletion
+├── readme.txt                      # WordPress.org readme
+├── README.md                       # GitHub readme
+├── CLAUDE.md                       # This file
 ├── assets/
 │   └── css/
-│       └── admin.css           # Admin styles for order pages
-└── languages/                  # Translation files (if any)
+│       └── admin.css               # Admin styles for order pages
+└── languages/                      # Translation files (if any)
 ```
 
 ## Settings Location
