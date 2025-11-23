@@ -5,7 +5,7 @@
  * Description: Shows alerts for low stock and out of stock items directly on the WooCommerce order edit page.
  * Version: 1.0.0
  * Author: Open WP Club
- * Author URI: https://developer.developer.developer
+ * Author URI: https://github.com/Open-WP-Club
  * License: Apache-2.0
  * License URI: https://www.apache.org/licenses/LICENSE-2.0
  * Text Domain: woo-inventory-alerts
