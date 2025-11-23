@@ -58,11 +58,13 @@ add_action('before_woocommerce_init', function() {
 });
 
 /**
- * Add settings link to plugins page (works even without WooCommerce)
+ * Add settings link to plugins page
  */
 add_filter('plugin_action_links_' . plugin_basename(WIA_PLUGIN_FILE), function($links) {
-    $settings_link = '<a href="' . admin_url('admin.php?page=wc-settings&tab=products&section=inventory') . '">' . __('Settings', 'woo-inventory-alerts') . '</a>';
-    array_unshift($links, $settings_link);
+    if (class_exists('WooCommerce')) {
+        $settings_link = '<a href="' . esc_url(admin_url('admin.php?page=wc-settings&tab=products&section=inventory')) . '">' . esc_html__('Settings', 'woo-inventory-alerts') . '</a>';
+        array_unshift($links, $settings_link);
+    }
     return $links;
 });
 
@@ -73,9 +75,6 @@ add_action('plugins_loaded', function() {
     if (!wia_check_woocommerce()) {
         return;
     }
-
-    // Load text domain
-    load_plugin_textdomain('woo-inventory-alerts', false, dirname(plugin_basename(WIA_PLUGIN_FILE)) . '/languages');
 
     // Initialize main class
     WIA_Inventory_Alerts::get_instance();
@@ -149,6 +148,7 @@ class WIA_Inventory_Alerts {
                 $new_settings[] = array(
                     'title'             => __('Alert threshold', 'woo-inventory-alerts'),
                     'desc'              => __('Show alert when product stock is at or below this number. Set to 0 to only show out of stock alerts.', 'woo-inventory-alerts'),
+                    'desc_tip'          => true,
                     'id'                => 'wia_stock_threshold',
                     'type'              => 'number',
                     'default'           => 0,
@@ -160,12 +160,11 @@ class WIA_Inventory_Alerts {
                 );
 
                 $new_settings[] = array(
-                    'title'         => __('Hide alerts', 'woo-inventory-alerts'),
-                    'desc'          => __('Hide inventory alerts on the order edit page for all users', 'woo-inventory-alerts'),
-                    'id'            => 'wia_hide_alerts',
-                    'type'          => 'checkbox',
-                    'default'       => 'no',
-                    'checkboxgroup' => 'start',
+                    'title'   => __('Hide alerts', 'woo-inventory-alerts'),
+                    'desc'    => __('Hide inventory alerts on the order edit page for all users', 'woo-inventory-alerts'),
+                    'id'      => 'wia_hide_alerts',
+                    'type'    => 'checkbox',
+                    'default' => 'no',
                 );
 
                 $new_settings[] = array(
@@ -187,7 +186,7 @@ class WIA_Inventory_Alerts {
         global $post_type;
 
         // Only on order edit pages
-        if (!in_array($hook, array('post.php', 'woocommerce_page_wc-orders')) ||
+        if (!in_array($hook, array('post.php', 'woocommerce_page_wc-orders'), true) ||
             ($hook === 'post.php' && $post_type !== 'shop_order')) {
             return;
         }
@@ -245,7 +244,7 @@ class WIA_Inventory_Alerts {
             printf(
                 '<span class="wia-stock-alert wia-low-stock">%s: %d</span>',
                 esc_html__('Low Stock', 'woo-inventory-alerts'),
-                $stock_qty
+                (int) $stock_qty
             );
         }
 
@@ -360,7 +359,7 @@ class WIA_Inventory_Alerts {
                 printf(
                     '<li><span class="wia-product-name">%s</span> <small>(%d %s)</small></li>',
                     esc_html($alert['name']),
-                    $alert['stock'],
+                    (int) $alert['stock'],
                     esc_html__('left', 'woo-inventory-alerts')
                 );
             }
