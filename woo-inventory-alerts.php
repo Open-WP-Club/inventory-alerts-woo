@@ -3,7 +3,7 @@
  * Plugin Name: Woo Inventory Alerts
  * Plugin URI: https://github.com/Open-WP-Club/woo-inventory-alerts
  * Description: Shows alerts for low stock and out of stock items directly on the WooCommerce order edit page.
- * Version: 1.0.0
+ * Version: 1.0.1
  * Author: Open WP Club
  * Author URI: https://github.com/Open-WP-Club
  * License: Apache-2.0
@@ -19,6 +19,12 @@
 if (!defined('ABSPATH')) {
     exit;
 }
+
+// Plugin constants
+define('WIA_VERSION', '1.0.1');
+define('WIA_PLUGIN_FILE', __FILE__);
+define('WIA_PLUGIN_DIR', plugin_dir_path(__FILE__));
+define('WIA_PLUGIN_URL', plugin_dir_url(__FILE__));
 
 /**
  * Check if WooCommerce is active
@@ -47,14 +53,14 @@ function wia_woocommerce_missing_notice() {
  */
 add_action('before_woocommerce_init', function() {
     if (class_exists(\Automattic\WooCommerce\Utilities\FeaturesUtil::class)) {
-        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', __FILE__, true);
+        \Automattic\WooCommerce\Utilities\FeaturesUtil::declare_compatibility('custom_order_tables', WIA_PLUGIN_FILE, true);
     }
 });
 
 /**
  * Add settings link to plugins page (works even without WooCommerce)
  */
-add_filter('plugin_action_links_' . plugin_basename(__FILE__), function($links) {
+add_filter('plugin_action_links_' . plugin_basename(WIA_PLUGIN_FILE), function($links) {
     $settings_link = '<a href="' . admin_url('admin.php?page=wc-settings&tab=products&section=inventory') . '">' . __('Settings', 'woo-inventory-alerts') . '</a>';
     array_unshift($links, $settings_link);
     return $links;
@@ -69,7 +75,7 @@ add_action('plugins_loaded', function() {
     }
 
     // Load text domain
-    load_plugin_textdomain('woo-inventory-alerts', false, dirname(plugin_basename(__FILE__)) . '/languages');
+    load_plugin_textdomain('woo-inventory-alerts', false, dirname(plugin_basename(WIA_PLUGIN_FILE)) . '/languages');
 
     // Initialize main class
     WIA_Inventory_Alerts::get_instance();
@@ -192,69 +198,12 @@ class WIA_Inventory_Alerts {
             return;
         }
 
-        wp_add_inline_style('woocommerce_admin_styles', $this->get_inline_css());
-    }
-
-    /**
-     * Get inline CSS
-     */
-    private function get_inline_css() {
-        return '
-            .wia-stock-alert {
-                display: inline-block;
-                padding: 4px 8px;
-                border-radius: 3px;
-                font-size: 11px;
-                font-weight: 600;
-                line-height: 1.4;
-                text-transform: uppercase;
-                letter-spacing: 0.5px;
-            }
-            .wia-stock-alert.wia-out-of-stock {
-                background-color: #d63638;
-                color: #fff;
-            }
-            .wia-stock-alert.wia-low-stock {
-                background-color: #dba617;
-                color: #fff;
-            }
-            .wia-stock-column {
-                width: 120px;
-                text-align: center;
-            }
-            .wia-meta-box-alert {
-                padding: 10px;
-                margin: 5px 0;
-                border-left: 4px solid #d63638;
-                background: #fcf0f0;
-            }
-            .wia-meta-box-alert.wia-warning {
-                border-left-color: #dba617;
-                background: #fef8e8;
-            }
-            .wia-meta-box-alert strong {
-                color: #d63638;
-            }
-            .wia-meta-box-alert.wia-warning strong {
-                color: #996800;
-            }
-            .wia-alert-list {
-                margin: 0;
-                padding-left: 20px;
-                list-style-type: disc;
-            }
-            .wia-alert-list li {
-                margin: 3px 0;
-            }
-            .wia-product-name {
-                color: #d63638;
-                font-weight: 600;
-            }
-            .wia-all-good {
-                padding: 10px;
-                color: #00a32a;
-            }
-        ';
+        wp_enqueue_style(
+            'wia-admin-styles',
+            WIA_PLUGIN_URL . 'assets/css/admin.css',
+            array(),
+            WIA_VERSION
+        );
     }
 
     /**

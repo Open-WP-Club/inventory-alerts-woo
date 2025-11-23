@@ -1,0 +1,77 @@
+/**
+ * Woo Inventory Alerts - Admin Styles
+ *
+ * Styles for the order edit page alerts.
+ */
+
+/* Stock alert badges in order items table */
+.wia-stock-alert {
+    display: inline-block;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 11px;
+    font-weight: 600;
+    line-height: 1.4;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.wia-stock-alert.wia-out-of-stock {
+    background-color: #d63638;
+    color: #fff;
+}
+
+.wia-stock-alert.wia-low-stock {
+    background-color: #dba617;
+    color: #fff;
+}
+
+/* Stock column in order items table */
+.wia-stock-column {
+    width: 120px;
+    text-align: center;
+}
+
+/* Meta box alert containers */
+.wia-meta-box-alert {
+    padding: 10px;
+    margin: 5px 0;
+    border-left: 4px solid #d63638;
+    background: #fcf0f0;
+}
+
+.wia-meta-box-alert.wia-warning {
+    border-left-color: #dba617;
+    background: #fef8e8;
+}
+
+.wia-meta-box-alert strong {
+    color: #d63638;
+}
+
+.wia-meta-box-alert.wia-warning strong {
+    color: #996800;
+}
+
+/* Alert list styling */
+.wia-alert-list {
+    margin: 0;
+    padding-left: 20px;
+    list-style-type: disc;
+}
+
+.wia-alert-list li {
+    margin: 3px 0;
+}
+
+/* Product name in alerts (red) */
+.wia-product-name {
+    color: #d63638;
+    font-weight: 600;
+}
+
+/* All good message */
+.wia-all-good {
+    padding: 10px;
+    color: #00a32a;
+}

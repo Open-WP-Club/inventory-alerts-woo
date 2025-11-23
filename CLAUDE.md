@@ -16,7 +16,15 @@ This plugin adds inventory alerts directly on WooCommerce order pages to help st
 
 ## File Structure
 
-- `woo-inventory-alerts.php` - Main plugin file (single-file plugin)
+```
+woo-inventory-alerts/
+├── woo-inventory-alerts.php    # Main plugin file
+├── assets/
+│   └── css/
+│       └── admin.css           # Admin styles for order pages
+├── CLAUDE.md                   # This file
+└── languages/                  # Translation files (if any)
+```
 
 ## Settings Location
 
@@ -38,8 +46,15 @@ Settings are integrated into WooCommerce's native settings:
 - Supports both legacy post-based orders and HPOS (High-Performance Order Storage)
 - Tested with WooCommerce 5.0 - 8.0+
 
+## Plugin Constants
+
+- `WIA_VERSION` - Plugin version (for cache busting)
+- `WIA_PLUGIN_FILE` - Path to main plugin file
+- `WIA_PLUGIN_DIR` - Plugin directory path
+- `WIA_PLUGIN_URL` - Plugin directory URL
+
 ## Development Notes
 
-- All styles are inline (no external CSS files)
+- Admin styles in `assets/css/admin.css`
 - Uses WooCommerce Settings API for options
 - Options stored: `wia_stock_threshold` (int), `wia_hide_alerts` ('yes'/'no')
