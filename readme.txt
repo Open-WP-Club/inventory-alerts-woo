@@ -3,7 +3,7 @@ Contributors: openwpclub
 Tags: woocommerce, inventory, stock, alerts, orders
 Requires at least: 5.8
 Tested up to: 6.8
-Stable tag: 1.1.1
+Stable tag: 1.1.3
 Requires PHP: 7.4
 License: Apache-2.0
 License URI: https://www.apache.org/licenses/LICENSE-2.0
@@ -47,6 +47,17 @@ Set to 0 (default) to only show out of stock alerts. Set to any number to show a
 
 == Changelog ==
 
+= 1.1.3 =
+* Fixed inventory alert settings not rendering as a proper separate section in WooCommerce > Settings > Products > Inventory
+* Added missing sectionstart so the Inventory Alerts block has its own titled section header
+* Updated WooCommerce tested up to 9.9
+
+= 1.1.2 =
+* Minor internal update
+
+= 1.1.1 =
+* Fixed stock status display: show empty cells for products with sufficient stock instead of incorrect status text
+
 = 1.1.0 =
 * Renamed plugin to "Inventory Alerts for WooCommerce" for WordPress.org compliance
 * Changed text domain to "inventory-alerts-for-woo"
@@ -69,5 +80,5 @@ Set to 0 (default) to only show out of stock alerts. Set to any number to show a
 
 == Upgrade Notice ==
 
-= 1.1.0 =
-Plugin renamed to "Inventory Alerts for WooCommerce" for WordPress.org trademark compliance.
+= 1.1.3 =
+Fixes inventory alert settings not appearing correctly in WooCommerce settings.
