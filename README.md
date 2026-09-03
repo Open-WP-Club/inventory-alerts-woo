@@ -36,9 +36,18 @@ Navigate to **WooCommerce > Settings > Products > Inventory** and scroll to the 
 
 ## Requirements
 
-- WordPress 5.8+
+- WordPress 5.8+ (tested through 7.1)
 - WooCommerce 5.0+
-- PHP 7.4+
+- PHP 8.1+
+
+## Tests
+
+Run the stock-calculation tests without booting WordPress:
+
+```sh
+php tests/stock-alerts-test.php
+php tests/order-screen-test.php
+```
 
 ## License
 

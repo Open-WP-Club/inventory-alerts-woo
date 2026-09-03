@@ -2,9 +2,9 @@
 Contributors: openwpclub
 Tags: woocommerce, inventory, stock, alerts, orders
 Requires at least: 5.8
-Tested up to: 6.8
-Stable tag: 1.1.3
-Requires PHP: 7.4
+Tested up to: 7.1
+Stable tag: 1.2.0
+Requires PHP: 8.1
 License: Apache-2.0
 License URI: https://www.apache.org/licenses/LICENSE-2.0
 
@@ -47,6 +47,15 @@ Set to 0 (default) to only show out of stock alerts. Set to any number to show a
 
 == Changelog ==
 
+= 1.2.0 =
+* Tested with WordPress 7.1.
+* Show the projected stock remaining while an order is being edited, so an item scanned from 1 to 0 is immediately marked as out of stock.
+* Account for several order lines that use the same managed stock record, including variations that use their parent's stock.
+* Show alerts for products explicitly set to out of stock even when WooCommerce stock management is disabled.
+* Preserve decimal stock quantities in low-stock alerts.
+* Split stock calculations, settings, and order-screen rendering into focused files, with standalone stock-calculation tests.
+* Require PHP 8.1 or newer.
+
 = 1.1.3 =
 * Fixed inventory alert settings not rendering as a proper separate section in WooCommerce > Settings > Products > Inventory
 * Added missing sectionstart so the Inventory Alerts block has its own titled section header
@@ -79,6 +88,9 @@ Set to 0 (default) to only show out of stock alerts. Set to any number to show a
 * Initial release
 
 == Upgrade Notice ==
+
+= 1.2.0 =
+Adds projected-stock alerts while editing an order and compatibility verification for WordPress 7.1.
 
 = 1.1.3 =
 Fixes inventory alert settings not appearing correctly in WooCommerce settings.
